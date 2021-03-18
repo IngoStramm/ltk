@@ -1,3 +1,7 @@
+.ltk-title {
+    font-family: "Oswald", Sans-serif;
+    font-weight: 400;
+}
 .ltk-table {
     background-color: transparent;
     width: 100%;
@@ -5,7 +9,8 @@
     font-size: 0.9em;
     border-spacing: 0;
     border-collapse: collapse;
-    font: inherit;
+    font-family: "Oswald", Sans-serif;
+    font-weight: 400;
     color: inherit;
     tbody {
         font: inherit;
