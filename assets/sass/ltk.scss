@@ -1,0 +1,27 @@
+.ltk-table {
+    background-color: transparent;
+    width: 100%;
+    margin-bottom: 15px;
+    font-size: 0.9em;
+    border-spacing: 0;
+    border-collapse: collapse;
+    font: inherit;
+    color: inherit;
+    tbody {
+        font: inherit;
+        color: inherit;
+        td,
+        th {
+            padding: 15px;
+            line-height: 1.5;
+            vertical-align: top;
+            border: 1px solid #ccc;
+            font: inherit;
+            color: inherit;
+        }
+        > tr:nth-child(odd) > td,
+        th {
+            background-color: #eee;
+        }
+    }
+}
