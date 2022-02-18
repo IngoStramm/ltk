@@ -11,10 +11,11 @@ function ltk_frontend_scripts()
         wp_enqueue_script('ltk-livereload', 'http://localhost:35729/livereload.js?snipver=1', array(), null, true);
     endif;
 
-    wp_register_script('ltk-script', LTK_URL . 'assets/js/ltk' . $min . '.js', array('jquery'), '1.0.0', true);
+    wp_enqueue_script('vanilla-masker', LTK_URL . 'assets/js/vanilla-masker.min.js', array(), false, 'all');
 
+    wp_register_script('ltk-script', LTK_URL . 'assets/js/ltk' . $min . '.js', array('jquery', 'vanilla-masker'), '1.0.0', true);
     wp_enqueue_script('ltk-script');
-
     wp_localize_script('ltk-script', 'ajax_object', array('ajax_url' => admin_url('admin-ajax.php')));
+
     wp_enqueue_style('ltk-style', LTK_URL . 'assets/css/ltk.css', array(), false, 'all');
 }
