@@ -62,4 +62,13 @@ function ltk_register_product_metabox()
         'type'       => 'text',
         'repeatable'      => true,
     ));
+
+    $cmb->add_field(array(
+        'name'       => esc_html__('Vídeo do produto', 'ltk'),
+        'id'         => 'ltk_prod_video',
+        'type'       => 'text_url',
+        'attributes'      => array(
+            'placeholder'   => 'https://'
+        )
+    ));
 }
