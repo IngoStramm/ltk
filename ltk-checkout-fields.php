@@ -13,7 +13,7 @@ function ltk_override_default_address_fields($fields)
 
     // ltk_debug($fields);
 
-    unset($fields['country']);
+    // unset($fields['country']);
 
     return $fields;
 }
