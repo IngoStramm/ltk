@@ -42,7 +42,7 @@ function ltk_remove_checkout_fields($fields)
 
     $fields['billing']['billing_nome_fantasia'] = array(
         'label'     => __('Nome Fantasia', 'ltk'),
-        'required'  => true,
+        'required'  => false,
         'class'     => array(
             'form-row-wide', 'clear'
         ),
