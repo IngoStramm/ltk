@@ -1,7 +1,7 @@
 {
     "name": "ltk",
     "description": "Descrição do Loja Tünkers.",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "title": "Loja Tünkers",
     "homepage": "https://agencialaf.com",
     "main": "Gruntfile.js",

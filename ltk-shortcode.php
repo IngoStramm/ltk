@@ -70,7 +70,7 @@ function ltk_welcome_msg()
     $wc_my_account_page_id = get_option('woocommerce_myaccount_page_id');
     if($wc_my_account_page_id) {
         $wc_my_account_page_url = get_permalink($wc_my_account_page_id);
-        $output = '<a href="' . $wc_my_account_page_url . '">' . $output . '</a>';
+        $output = '<a href="' . $wc_my_account_page_url . '"><span class="elementor-icon-list-text">' . $output . '</span></a>';
     }
 
     return $output;
