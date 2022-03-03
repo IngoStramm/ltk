@@ -2,39 +2,43 @@
 // Alguns dados dos campos do endereço precisam ser alterados através deste filtro
 add_filter('woocommerce_default_address_fields', 'ltk_override_default_address_fields');
 
-function ltk_override_default_address_fields($address_fields)
+function ltk_override_default_address_fields($fields)
 {
-    $address_fields['company']['label'] = __('Razão Social', 'ltk');
-    $address_fields['company']['required'] = true;
-    $address_fields['address_1']['label'] = __('Nome do Logradouro', 'ltk');
-    $address_fields['address_1']['placeholder'] = '';
-    $address_fields['address_2']['priority'] = 51;
+    $fields['company']['label'] = __('Razão Social', 'ltk');
+    $fields['company']['required'] = true;
+    $fields['address_1']['label'] = __('Nome do Logradouro', 'ltk');
+    $fields['address_1']['placeholder'] = '';
+    $fields['address_2']['priority'] = 51;
+    $fields['address_2']['label_class'] = '';
 
-    unset($address_fields['country']);
+    // ltk_debug($fields);
 
-    return $address_fields;
+    unset($fields['country']);
+
+    return $fields;
 }
 
-// Todo o resto pode ser alterado por aqui
+// Campos do CHECKOUT
 add_filter('woocommerce_checkout_fields', 'ltk_remove_checkout_fields');
 
 function ltk_remove_checkout_fields($fields)
 {
+    // Altera campos
+    // $fields['billing']['billing_email']['priority'] = 21;
+    $fields['billing']['billing_phone']['class'] = array('form-row-last');
+    $fields['billing']['billing_phone']['priority'] = 23;
+    $fields['billing']['billing_address_1']['class'] = array('form-row-wide');
+    $fields['billing']['billing_address_2']['class'] = array('form-row-wide');
+    $fields['billing']['billing_neighborhood']['class'] = array('form-row-last');
+    $fields['billing']['billing_city']['class'] = array('form-row-first');
 
-    // ltk_debug($fields['billing']['billing_first_name']['value']);
-    // $fields['billing']['billing_ddd']['value'] = '11';
-
-    $fields['billing']['billing_email']['priority'] = 21;
-
+    // Novos campos
     $fields['billing']['billing_ddd'] = array(
         'label'     => __('DDD', 'ltk'),
         'required'  => true,
         'class'     => array('form-row-first'),
         'priority' => 22
     );
-
-    $fields['billing']['billing_phone']['class'] = array('form-row-last');
-    $fields['billing']['billing_phone']['priority'] = 23;
 
     $fields['billing']['billing_nome_fantasia'] = array(
         'label'     => __('Nome Fantasia', 'ltk'),
@@ -103,17 +107,6 @@ function ltk_remove_checkout_fields($fields)
         'priority' => 71
     );
 
-
-    $fields['billing']['billing_address_1']['class'] = array('form-row-wide');
-
-    $fields['billing']['billing_address_2']['class'] = array('form-row-wide');
-
-    $fields['billing']['billing_neighborhood']['class'] = array('form-row-last');
-
-    $fields['billing']['billing_city']['class'] = array('form-row-first');
-
-    unset($fields['order']['order_comments']);
-
     return $fields;
 }
 
@@ -177,18 +170,51 @@ function ltk_checkout_field_display_admin_order_meta($order)
     echo $output;
 }
 
-// add_filter('woocommerce_form_field_args', 'ltk_load_custom_fields_in_checkout', 10, 3);
+// add the filter 
+add_filter('woocommerce_billing_fields', 'ltk_woocommerce_address_fields', 10, 1);
+add_filter('woocommerce_shipping_fields', 'ltk_woocommerce_address_fields', 10, 1);
 
-function ltk_load_custom_fields_in_checkout($args, $key, $value)
+function ltk_woocommerce_address_fields($fields)
 {
-    ltk_debug($value);
-    return $args;
-}
+    // ltk_debug($fields);
+    $fields['billing_email']['priority'] = 21;
+    $fields['shipping_email']['priority'] = 21;
 
-// add_filter('woocommerce_checkout_get_value', 'ltk_get_custom_fields_in_checkout', 10, 1);
+    // $fields['ddd'] = array(
+    //     'label'     => __('DDD', 'ltk'),
+    //     'required'  => true,
+    //     'class'     => array('form-row-first'),
+    //     'priority' => 22
+    // );
+    // woocommerce_form_field('ddd', array(
+    //     'type'          => 'text',
+    //     'class'     => array('form-row-first'),
+    //     'label'     => __('DDD', 'ltk'),
+    //     'required'  => true,
+    //     'priority' => 22
+    // ), '11');
 
-function ltk_get_custom_fields_in_checkout($input)
+    foreach ($fields as $k => $field) {
+        // ltk_debug($k);
+        // ltk_debug($field);
+    }
+    // unset($fields['billing_phone']);
+    return $fields;
+};
+// woocommerce_get_country_locale_default
+
+// add the filter 
+// add_filter('woocommerce_get_country_locale_default', 'filter_woocommerce_get_country_locale_default', 10, 1);
+
+function filter_woocommerce_get_country_locale_default($fields)
 {
-    ltk_debug($input);
-    return $input;
-}
+    $fields['ddd'] = array(
+        'label'     => __('DDD', 'ltk'),
+        'required'  => true,
+        'class'     => array('form-row-first'),
+        'priority' => 22
+    );
+    ltk_debug($fields);
+    // make filter magic happen here... 
+    return $fields;
+};
