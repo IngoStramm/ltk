@@ -56,3 +56,22 @@ function ltk_produto_cmb_info_ext()
 
     return $output;
 }
+
+add_shortcode('ltk-welcome-msg', 'ltk_welcome_msg');
+function ltk_welcome_msg()
+{
+    $wp_user = wp_get_current_user();
+    $output = '';
+    if ($wp_user->ID === 0) {
+        $output .= __('Entre ou cadastre-se', 'ltk');
+    } else {
+        $output .= sprintf(__('Seja bem-vindo, %s'), $wp_user->display_name);
+    }
+    $wc_my_account_page_id = get_option('woocommerce_myaccount_page_id');
+    if($wc_my_account_page_id) {
+        $wc_my_account_page_url = get_permalink($wc_my_account_page_id);
+        $output = '<a href="' . $wc_my_account_page_url . '">' . $output . '</a>';
+    }
+
+    return $output;
+}
