@@ -4,7 +4,7 @@
  * Plugin Name: Loja Tünkers
  * Plugin URI: https://agencialaf.com
  * Description: Descrição do Loja Tünkers.
- * Version: 0.0.13
+ * Version: 0.0.14
  * Author: Ingo Stramm
  * Text Domain: ltk
  * License: GPLv2

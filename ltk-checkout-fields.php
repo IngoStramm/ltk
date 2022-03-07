@@ -11,36 +11,36 @@ function ltk_override_default_address_fields($fields)
     $fields['address_2']['priority'] = 51;
     $fields['address_2']['label_class'] = '';
 
-    // ltk_debug($fields);
 
     // unset($fields['country']);
 
     return $fields;
 }
 
-// Campos do CHECKOUT
-add_filter('woocommerce_checkout_fields', 'ltk_remove_checkout_fields');
+// Billing Fields do WC Extra Checkout Fields for Brazil
+add_filter('wcbcf_billing_fields', 'ltk_override_wcbcf_billing_fields');
 
-function ltk_remove_checkout_fields($fields)
+function ltk_override_wcbcf_billing_fields($fields)
 {
-    // Altera campos
-    // $fields['billing']['billing_email']['priority'] = 21;
-    $fields['billing']['billing_phone']['class'] = array('form-row-last');
-    $fields['billing']['billing_phone']['priority'] = 23;
-    $fields['billing']['billing_address_1']['class'] = array('form-row-wide');
-    $fields['billing']['billing_address_2']['class'] = array('form-row-wide');
-    $fields['billing']['billing_neighborhood']['class'] = array('form-row-last');
-    $fields['billing']['billing_city']['class'] = array('form-row-first');
+    // ltk_debug($fields);
+    $fields['billing_neighborhood']['class'] = array('form-row-last');
+    $fields['billing_city']['class'] = array('form-row-first');
+    $fields['billing_phone']['priority'] = 23;
+    $fields['billing_phone']['class'] = array('form-row-last');
+    $fields['billing_email']['priority'] = 21;
+    // $fields['shipping_email']['priority'] = 21;
 
-    // Novos campos
-    $fields['billing']['billing_ddd'] = array(
-        'label'     => __('DDD', 'ltk'),
+
+    $fields['billing_ddd'] = array(
+        'label'     => __('DDD',
+            'ltk'
+        ),
         'required'  => true,
         'class'     => array('form-row-first'),
-        'priority' => 22
+        'priority' => 23
     );
 
-    $fields['billing']['billing_nome_fantasia'] = array(
+    $fields['billing_nome_fantasia'] = array(
         'label'     => __('Nome Fantasia', 'ltk'),
         'required'  => false,
         'class'     => array(
@@ -49,7 +49,21 @@ function ltk_remove_checkout_fields($fields)
         'priority' => 25
     );
 
-    $fields['billing']['billing_tipo_logradouro'] = array(
+    $fields['billing_empresa_isenta'] = array(
+        'label'     => __('Empresa Isenta', 'ltk'),
+        'required'  => true,
+        'class'     => array(
+            'form-row-wide', 'clear'
+        ),
+        'priority' => 28,
+        'type'      => 'select',
+        'options'   => array(
+            'nao-isenta'    => 'Não',
+            'isenta'        => 'Sim'
+        )
+    );
+
+    $fields['billing_tipo_logradouro'] = array(
         'label'     => __('Tipo de Logradouro', 'ltk'),
         'type'      => 'select',
         'options'   => array(
@@ -96,17 +110,25 @@ function ltk_remove_checkout_fields($fields)
             'Vila' => 'Vila',
         ),
         'required'  => true,
-        'class'     => array('form-row-last'),
+        'class'     => array('form-row-wide'),
         'priority' => 49
     );
 
-    $fields['billing']['billing_municipio'] = array(
+    $fields['billing_municipio'] = array(
         'label'     => __('Município', 'ltk'),
         'required'  => false,
-        'class'     => array('form-row-last'),
+        'class'     => array('form-row-wide'),
         'priority' => 71
     );
 
+    return $fields;
+}
+
+// Shipping Fields do WC Extra Checkout Fields for Brazil
+add_filter('wcbcf_shipping_fields', 'ltk_override_wcbcf_shipping_fields');
+
+function ltk_override_wcbcf_shipping_fields($fields) {
+    $fields['shipping_neighborhood']['class'] = array('form-row-last');
     return $fields;
 }
 
@@ -169,39 +191,6 @@ function ltk_checkout_field_display_admin_order_meta($order)
 
     echo $output;
 }
-
-// add the filter 
-add_filter('woocommerce_billing_fields', 'ltk_woocommerce_address_fields', 10, 1);
-add_filter('woocommerce_shipping_fields', 'ltk_woocommerce_address_fields', 10, 1);
-
-function ltk_woocommerce_address_fields($fields)
-{
-    // ltk_debug($fields);
-    $fields['billing_email']['priority'] = 21;
-    $fields['shipping_email']['priority'] = 21;
-
-    // $fields['ddd'] = array(
-    //     'label'     => __('DDD', 'ltk'),
-    //     'required'  => true,
-    //     'class'     => array('form-row-first'),
-    //     'priority' => 22
-    // );
-    // woocommerce_form_field('ddd', array(
-    //     'type'          => 'text',
-    //     'class'     => array('form-row-first'),
-    //     'label'     => __('DDD', 'ltk'),
-    //     'required'  => true,
-    //     'priority' => 22
-    // ), '11');
-
-    foreach ($fields as $k => $field) {
-        // ltk_debug($k);
-        // ltk_debug($field);
-    }
-    // unset($fields['billing_phone']);
-    return $fields;
-};
-// woocommerce_get_country_locale_default
 
 // add the filter 
 // add_filter('woocommerce_get_country_locale_default', 'filter_woocommerce_get_country_locale_default', 10, 1);
