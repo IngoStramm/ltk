@@ -32,7 +32,8 @@ function ltk_override_wcbcf_billing_fields($fields)
 
 
     $fields['billing_ddd'] = array(
-        'label'     => __('DDD',
+        'label'     => __(
+            'DDD',
             'ltk'
         ),
         'required'  => true,
@@ -55,11 +56,11 @@ function ltk_override_wcbcf_billing_fields($fields)
         'class'     => array(
             'form-row-wide', 'clear'
         ),
-        'priority' => 28,
+        'priority' => 24,
         'type'      => 'select',
         'options'   => array(
-            'nao-isenta'    => 'Não',
-            'isenta'        => 'Sim'
+            'Não'    => 'Não',
+            'Sim'    => 'Sim'
         )
     );
 
@@ -127,7 +128,8 @@ function ltk_override_wcbcf_billing_fields($fields)
 // Shipping Fields do WC Extra Checkout Fields for Brazil
 add_filter('wcbcf_shipping_fields', 'ltk_override_wcbcf_shipping_fields');
 
-function ltk_override_wcbcf_shipping_fields($fields) {
+function ltk_override_wcbcf_shipping_fields($fields)
+{
     $fields['shipping_neighborhood']['class'] = array('form-row-last');
     return $fields;
 }
@@ -157,6 +159,10 @@ function ltk_checkout_field_update_order_meta($order_id)
         update_post_meta($order_id, '_billing_ddd', sanitize_text_field($_POST['billing_ddd']));
     }
 
+    if (!empty($_POST['billing_empresa_isenta'])) {
+        update_post_meta($order_id, '_billing_empresa_isenta', sanitize_text_field($_POST['billing_empresa_isenta']));
+    }
+
     if (!empty($_POST['billing_nome_fantasia'])) {
         update_post_meta($order_id, '_billing_nome_fantasia', sanitize_text_field($_POST['billing_nome_fantasia']));
     }
@@ -183,6 +189,8 @@ function ltk_checkout_field_display_admin_order_meta($order)
 
     $output .= '<strong>' . __('Nome Fantasia', 'ltk') . ':</strong> ' . get_post_meta($order->get_id(), '_billing_nome_fantasia', true) . '<br />';
 
+    $output .= '<strong>' . __('Empresa Isenta', 'ltk') . ':</strong> ' . get_post_meta($order->get_id(), '_billing_empresa_isenta', true) . '<br />';
+
     $output .= '<strong>' . __('Tipo de Logradouro', 'ltk') . ':</strong> ' . get_post_meta($order->get_id(), '_billing_tipo_logradouro', true) . '<br />';
 
     $output .= '<strong>' . __('Município', 'ltk') . ':</strong> ' . get_post_meta($order->get_id(), '_billing_municipio', true) . '<br />';
@@ -191,19 +199,3 @@ function ltk_checkout_field_display_admin_order_meta($order)
 
     echo $output;
 }
-
-// add the filter 
-// add_filter('woocommerce_get_country_locale_default', 'filter_woocommerce_get_country_locale_default', 10, 1);
-
-function filter_woocommerce_get_country_locale_default($fields)
-{
-    $fields['ddd'] = array(
-        'label'     => __('DDD', 'ltk'),
-        'required'  => true,
-        'class'     => array('form-row-first'),
-        'priority' => 22
-    );
-    ltk_debug($fields);
-    // make filter magic happen here... 
-    return $fields;
-};
