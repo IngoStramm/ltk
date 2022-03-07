@@ -12,10 +12,10 @@ function ltk_frontend_scripts()
     endif;
 
     // Remove o include 'jquery-mask' adicionado pelo plugin "Extra Checkout Fields for Brazil"
-    wp_deregister_script('jquery-mask');
+    // wp_deregister_script('jquery-mask');
 
     // Adiciona um JS vazio, com o nome de 'jquery-mask', para o plugin "Extra Checkout Fields for Brazil" continuar chamando os scripts que dependem dele
-    wp_register_script('jquery-mask',LTK_URL . 'assets/js/jquery-mask.js', array(), false, 'all');
+    // wp_register_script('jquery-mask',LTK_URL . 'assets/js/jquery-mask.js', array(), false, 'all');
 
     // Máscaras em JS para os campos (sem jQuery)
     wp_enqueue_script('vanilla-masker', LTK_URL . 'assets/js/vanilla-masker.min.js', array(), false, 'all');

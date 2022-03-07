@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+
+});
+
+window.addEventListener('load', function (event) {
+
     const applyMasks = function () {
 
         const fields = {
@@ -21,11 +26,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     };
 
-    applyMasks();
+    const removeJqueryMask = function () {
+        const billing_phone = document.getElementById('billing_phone');
+        if (typeof (billing_phone) !== undefined && billing_phone !== null) {
+            jQuery('#billing_phone').unmask();
+        }
 
-});
-
-window.addEventListener('load', function (event) {
+    };
 
     const billing_persontype_select = function () {
         const billing_persontype = document.getElementById('select2-billing_persontype-container');
@@ -46,6 +53,7 @@ window.addEventListener('load', function (event) {
         }, 10);
 
     };
-
+    removeJqueryMask();
+    applyMasks();
     billing_persontype_select();
 });
